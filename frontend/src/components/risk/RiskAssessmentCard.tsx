@@ -24,10 +24,10 @@ export const RiskAssessmentCard: React.FC<RiskAssessmentCardProps> = ({ assessme
   const insufficient = uniqueAssessments.filter(a => a.status === 'insufficient_data' || a.risk_score === null || a.risk_score === undefined);
 
   return (
-    <div className="bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-800 h-full">
+    <div className="bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-800">
       <h3 className="text-base font-semibold text-white mb-6 flex items-center gap-2">
         <span className="h-1.5 w-1.5 rounded-full bg-cyan-500"></span>
-        Risk Assessment Matrix
+        Indicator Risk Assessment
       </h3>
       
       {analyzed.length > 0 && (
@@ -42,31 +42,17 @@ export const RiskAssessmentCard: React.FC<RiskAssessmentCardProps> = ({ assessme
                                    assessment.severity === 'moderate' ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' :
                                    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
 
-              const score = assessment.risk_score !== null && assessment.risk_score !== undefined 
-                ? Math.round(assessment.risk_score * 100) 
-                : 0;
-
               return (
-                <li key={assessment.id} className="flex items-center justify-between bg-slate-950/50 p-4 rounded-lg border border-slate-800 hover:border-cyan-500/30 transition-colors duration-200">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{name}</p>
+                <li key={assessment.id} className="flex items-center justify-between bg-slate-950/50 p-3 rounded-lg border border-slate-800">
+                  <div>
+                    <p className="text-sm font-medium text-white">{name}</p>
                     <p className="text-[10px] text-slate-500 font-mono mt-0.5">{formatTimestamp(assessment.assessed_at)}</p>
                   </div>
-                  <div className="flex items-center gap-4 ml-4">
-                    <div className="text-right">
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wider">{Math.round((assessment.confidence || 0) * 100)}% Conf</p>
-                      <span className={`px-3 py-1 rounded-md text-xs font-bold border ${severityClass}`}>
-                        {score}%
-                      </span>
-                    </div>
-                    <div className="w-24">
-                      <div className="bg-slate-800 rounded-full h-1.5 overflow-hidden">
-                        <div 
-                          className={`h-full rounded-full transition-all duration-700 ${getSeverityColor(assessment.risk_score)}`}
-                          style={{ width: `${Math.min(100, Math.max(0, score))}%` }}
-                        />
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-[10px] text-slate-500 uppercase tracking-wider">{Math.round((assessment.confidence || 0) * 100)}% Conf</span>
+                    <span className={`px-3 py-1 rounded-md text-xs font-bold border ${severityClass}`}>
+                      {formatRiskScore(assessment.risk_score)}
+                    </span>
                   </div>
                 </li>
               );
