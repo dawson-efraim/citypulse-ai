@@ -9,6 +9,7 @@ from uuid import uuid4
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from ai_engine.risk_engine import RiskScoringEngine, THRESHOLDS, run_risk_scoring
+from app.schemas import RiskAssessmentResponse
 from app.db.models import (
     City,
     EnvironmentalIndicator,
@@ -95,6 +96,47 @@ class TestRiskScoringEngineLogic:
         assert "No threshold rules" in res["explanation"]
 
 
+class TestRiskAssessmentSerialization:
+    """Regression: DB rows must serialize into RiskAssessmentResponse."""
+
+    def test_missing_indicators_list_serializes(self):
+        """Production row stored missing_indicators=['pm10'] (JSONB list)."""
+        row = RiskAssessment(
+            id=uuid4(),
+            city_id=uuid4(),
+            indicator_id=uuid4(),
+            observed_at=datetime.now(timezone.utc),
+            status=RiskAssessmentStatus.INSUFFICIENT_DATA,
+            risk_score=None,
+            severity=None,
+            confidence=None,
+            assessment_text=None,
+            assessed_at=datetime.now(timezone.utc),
+            data_points_count=0,
+            missing_indicators=["pm10"],
+        )
+        resp = RiskAssessmentResponse.model_validate(row)
+        assert resp.missing_indicators == ["pm10"]
+
+    def test_missing_indicators_none_serializes(self):
+        row = RiskAssessment(
+            id=uuid4(),
+            city_id=uuid4(),
+            indicator_id=uuid4(),
+            observed_at=datetime.now(timezone.utc),
+            status=RiskAssessmentStatus.ANALYZED,
+            risk_score=Decimal("0.40"),
+            severity=RiskSeverity.MODERATE,
+            confidence=Decimal("0.90"),
+            assessment_text=None,
+            assessed_at=datetime.now(timezone.utc),
+            data_points_count=3,
+            missing_indicators=None,
+        )
+        resp = RiskAssessmentResponse.model_validate(row)
+        assert resp.missing_indicators is None
+
+
 class TestRiskScoringEngineDatabase:
     """Test database integration with mocked repositories."""
 
@@ -141,7 +183,8 @@ class TestRiskScoringEngineDatabase:
             assert a.severity == "Insufficient Data"
             assert a.confidence is None
             assert a.data_points_count == 0
-            assert a.missing_indicators is not None
+            # missing_indicators is a JSONB list of indicator codes, e.g. ['pm10']
+            assert isinstance(a.missing_indicators, list)
 
     @pytest.mark.asyncio
     async def test_generate_city_assessments_with_data(self, engine):

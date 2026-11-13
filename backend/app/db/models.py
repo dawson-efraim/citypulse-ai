@@ -297,7 +297,7 @@ class RiskAssessment(Base):
         nullable=False,
     )
     data_points_count: Mapped[int] = mapped_column(default=0, nullable=False)
-    missing_indicators: Mapped[Optional[dict]] = mapped_column(JSONB, nullable=True)
+    missing_indicators: Mapped[Optional[List[str]]] = mapped_column(JSONB, nullable=True)
 
     # Constraints
     __table_args__ = (

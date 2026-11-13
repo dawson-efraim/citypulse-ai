@@ -60,7 +60,7 @@ export interface RiskAssessment {
   assessment_text?: string;
   assessed_at: string;
   data_points_count: number;
-  missing_indicators?: Record<string, any>;
+  missing_indicators?: string[];
 }
 
 export interface Alert {

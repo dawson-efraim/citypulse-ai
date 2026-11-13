@@ -184,7 +184,7 @@ class RiskAssessmentResponse(BaseModel):
     assessment_text: Optional[str] = None
     assessed_at: datetime
     data_points_count: int
-    missing_indicators: Optional[dict] = None
+    missing_indicators: Optional[List[str]] = None
 
     model_config = ConfigDict(from_attributes=True)
 
