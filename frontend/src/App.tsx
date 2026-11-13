@@ -20,29 +20,31 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500/30">
       <Header
         cities={cities}
         currentCity={currentCity}
         onCityChange={setSelectedCityCode}
       />
-      <main className="max-w-7xl mx-auto px-6 py-6">
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 py-8">
         {error && (
-          <div className="mb-4 p-3 rounded bg-red-50 border border-red-200 text-red-700 text-sm">
+          <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm backdrop-blur-sm">
             {error}
           </div>
         )}
         {loading && cities.length === 0 ? (
-          <p className="text-sm text-slate-500">Loading monitoring data...</p>
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-cyan-500"></div>
+          </div>
         ) : (
-          <>
+          <div className="space-y-6">
             <OverviewSummary assessments={assessments} />
             <MonitoringCards observations={observations} indicators={indicators} />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <RiskAssessmentCard assessments={assessments} indicators={indicators} />
               <RiskTrendChart assessments={assessments} indicators={indicators} />
             </div>
-          </>
+          </div>
         )}
       </main>
     </div>
