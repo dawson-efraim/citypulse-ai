@@ -33,8 +33,7 @@ CityPulse AI is an urban environmental monitoring and preliminary risk assessmen
 9. [Project Structure](#-project-structure)
 10. [Project Limitations](#-project-limitations)
 11. [Team & Contributions](#-team--contributions)
-12. [Roadmap](#-roadmap)
-13. [Acknowledgements](#-acknowledgements)
+12. [Acknowledgements](#-acknowledgements)
 
 ---
 
@@ -209,14 +208,6 @@ citypulse-ai/
 - **IoT & Networking:** Telemetry simulation.
 - **Database & Cloud Engineer:** PostgreSQL schema, migrations, and seed scripts.
 - **Frontend & Integration:** React UI and responsive styling.
-
----
-
-## 🗺️ Roadmap
-
-- [x] Phase 1-5: Foundation, Backend, Pipeline, Heuristic Engine, Frontend Redesign.
-- [ ] Phase 6: ML Predictive Models & Real-time MQTT Sensor Streaming.
-- [ ] Phase 7: Multi-Region Alert Notification Webhooks.
 
 ---
 
