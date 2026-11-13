@@ -39,8 +39,8 @@ export const App: React.FC = () => {
             <OverviewSummary assessments={assessments} />
             <MonitoringCards observations={observations} indicators={indicators} />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <RiskAssessmentCard assessments={assessments} />
-              <RiskTrendChart assessments={assessments} />
+              <RiskAssessmentCard assessments={assessments} indicators={indicators} />
+              <RiskTrendChart assessments={assessments} indicators={indicators} />
             </div>
           </>
         )}
