@@ -9,6 +9,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-4169E1.svg)](https://www.postgresql.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000.svg)](https://vercel.com/)
 [![Render](https://img.shields.io/badge/Render-Deployed-46E3B7.svg)](https://render.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Turning Global Data into Intelligent Decisions.**
 
@@ -34,6 +35,7 @@ CityPulse AI is an urban environmental monitoring and preliminary risk assessmen
 10. [Project Limitations](#-project-limitations)
 11. [Team & Contributions](#-team--contributions)
 12. [Acknowledgements](#-acknowledgements)
+13. [License](#-license)
 
 ---
 
@@ -216,6 +218,12 @@ citypulse-ai/
 - **Open-Meteo:** Environmental data source.
 - **CartoDB:** Map tiles for geographic visualization.
 - **FastAPI / React / Tailwind:** Core technology framework.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
